@@ -22,7 +22,7 @@ func main() {
 		},
 	}
 
-	curState := states["e"]
+	curState := states["b"]
 
 	for currentTapePosition <= 10 { // bound to stop endless loop
 		for _, operation := range curState.operations {
