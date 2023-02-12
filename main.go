@@ -1,47 +1,38 @@
 package main
 
-import "strings"
-
 func main() {
-	currentTapePosition := 0 // the tape can technically stretch from -inf to +inf
-	tape := "1 0 1 0 1 0 1"  // Turing separates digits by empty slots.
+	currentTapePosition := 0 // the tape technically stretches -inf <-> +inf
 
 	states := map[string]state{
 		"b": {
-			operations:   []operation{{P}, {R}},
+			operations:   []operation{{P, "0"}, {R, ""}},
 			finalMConfig: "c",
 		},
 		"c": {
-			operations:   []operation{{R}},
+			operations:   []operation{{R, ""}},
 			finalMConfig: "k",
 		},
 		"k": {
-			operations:   []operation{{P}},
+			operations:   []operation{{P, "1"}},
 			finalMConfig: "e",
 		},
 		"e": {
-			operations:   []operation{{R}},
+			operations:   []operation{{R, ""}},
 			finalMConfig: "b",
 		},
 	}
 
 	curState := states["e"]
 
-	for currentTapePosition < len(tape) {
+	for currentTapePosition <= 10 { // bound to stop endless loop
 		for _, operation := range curState.operations {
 			switch operation.operationalMode {
 			case P:
-				curValue := string(tape[currentTapePosition])
-				if strings.TrimSpace(curValue) != "" {
-					print(curValue)
-				}
+				print(operation.value)
 				break
 
 			case R:
 				currentTapePosition++
-				break
-
-			case E:
 				break
 			}
 
@@ -52,12 +43,14 @@ func main() {
 }
 
 type state struct {
+	symbol       string
 	operations   []operation
 	finalMConfig string
 }
 
 type operation struct {
 	operationalMode
+	value string
 }
 
 type operationalMode string
@@ -65,5 +58,4 @@ type operationalMode string
 const (
 	R operationalMode = "R"
 	P operationalMode = "P"
-	E operationalMode = "E"
 )
