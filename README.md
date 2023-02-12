@@ -1,0 +1,2 @@
+A quick expirement to implement a state machine similar to the Turing Machine described in the first table of Turing's paper "On Computable Numbers, with an Application to the Entscheidungsproblem".
+The table is shown in the file ```turingtable.png```
